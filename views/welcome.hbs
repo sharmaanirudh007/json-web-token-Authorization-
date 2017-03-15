@@ -1,0 +1,69 @@
+<html>
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+</head>
+
+<body>
+
+  <h1>Welcome</h1>
+  <p>hello</p>
+  <button id="click" >home</button>
+<p><a href="/home">home</a></p>
+  <p id="item">{{pass}}</p>
+  <p id="result"></p>
+
+<script>
+
+  $(document).ready(function(){
+  $("#click").click(function(){
+    alert("welcome");
+
+var url = "/login";
+
+  $.ajax({
+    type: "POST",
+    url: url,
+  // dataType: 'json',
+   /*headers:{
+      "Authorization", "Bearer " +   localStorage.token
+    }*/
+
+  /* headers: {
+        'My-First-Header':'first value',
+        'My-Second-Header':'second value'
+    }*/
+    //OR
+   beforeSend: function(xhr) {
+      if (localStorage.token) {
+        localStorage.token = document.getElementById("item").innerHTML;
+         document.getElementById("result").innerHTML = localStorage.token;
+
+        xhr.setRequestHeader("Authorization", "Bearer" + " " +  localStorage.token);
+      }
+    }
+
+}).done(function(data) {
+    alert(data);
+    window.location = '/home';
+});
+/*$.ajax({
+  type: "POST",
+  beforeSend: function(request) {
+    request.setRequestHeader("Authorization", "Bearer " +   localStorage.token);
+  },
+  url: url,
+  data: "json=" + escape(JSON.stringify(Authorization)),
+  processData: false,
+  success: function(msg) {
+    alert("The result =" + StringifyPretty(msg));
+  }
+});*/
+});
+});
+
+
+</script>
+
+</body>
+</html>
